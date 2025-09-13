@@ -1,7 +1,11 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  assetPrefix: '/home',
+  basePath: '/home',
+  experimental: {
+    externalDir: true,
+  },
 };
 
 export default nextConfig;
