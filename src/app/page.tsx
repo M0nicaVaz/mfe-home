@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Button } from '@shared';
+import { SharedButtonDemo } from '../components/SharedButtonDemo';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -20,11 +20,7 @@ export default function Home() {
           >
             Voltar para o outro projeto do mfe
           </a>
-          <Button
-            style={{ marginLeft: 12 }}
-            onClick={() => alert('Botão compartilhado da HOME!')}
-            label="Shared Button"
-          />
+          <SharedButtonDemo />
         </div>
       </main>
       <footer className={styles.footer}>
