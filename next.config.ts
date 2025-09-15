@@ -8,9 +8,7 @@ const nextConfig: NextConfig = {
     externalDir: true,
   },
   turbopack: {
-    // Ensure Turbopack resolves workspace root to this app
     root: __dirname,
-    // Alias the local package name to the actual shared folder
     resolveAlias: {
       shared: path.resolve(__dirname, '../shared'),
     },
@@ -23,6 +21,15 @@ const nextConfig: NextConfig = {
       shared: path.resolve(__dirname, '../shared'),
     };
     return config;
+  },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/home',
+        permanent: false,
+      },
+    ];
   },
 };
 
