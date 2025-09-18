@@ -9,18 +9,23 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "next": "15.5.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "shared": "file:../shared",
-    "@types/react": "^19",
-    "@types/react-dom": "^19"
+    "react-responsive": "^10.0.1",
+    "shared": "file:../shared"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "eslint": "^9",
     "eslint-config-next": "15.5.3",
+    "sass": "^1.92.1",
     "typescript": "^5"
   }
 }

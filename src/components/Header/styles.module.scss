@@ -1,0 +1,18 @@
+@use "../../../../shared/styles/index.scss" as *;
+
+.container {
+  flex-shrink: 0;
+  margin: $margin-md;
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .title {
+    font-size: $body-lg;
+    margin-right: $margin-md;
+  }
+}

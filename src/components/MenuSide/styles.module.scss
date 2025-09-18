@@ -1,0 +1,17 @@
+@use "../../../../shared/styles/index.scss" as *;
+
+.container {
+  position: relative;
+  flex-shrink: 0;
+  width: 16rem;
+  height: 100%;
+  background-color: $color-brand-400;
+}
+
+.buttons {
+  margin-top: $margin-lg;
+}
+
+.isMenuClosed {
+  width: 5rem;
+}

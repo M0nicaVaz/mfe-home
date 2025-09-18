@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1",
+    "name": "João da Silva",
+    "email": "joao.silva@email.com",
+    "transactions": [
+      {
+        "id": "t1",
+        "clientId": "1",
+        "amount": 2500,
+        "date": "2025-08-01",
+        "direction": "income",
+        "transactionType": "depósito"
+      },
+      {
+        "id": "t2",
+        "clientId": "1",
+        "amount": 1000,
+        "date": "2025-08-02",
+        "direction": "outcome",
+        "transactionType": "saque"
+      },
+      {
+        "id": "t3",
+        "clientId": "1",
+        "amount": 500,
+        "date": "2025-08-03",
+        "direction": "income",
+        "transactionType": "pagamento"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Maria Oliveira",
+    "email": "maria.oliveira@email.com",
+    "transactions": [
+      {
+        "id": "t4",
+        "clientId": "2",
+        "amount": 15000,
+        "date": "2025-08-02",
+        "direction": "income",
+        "transactionType": "investment"
+      },
+      {
+        "id": "t5",
+        "clientId": "2",
+        "amount": 2000,
+        "date": "2025-08-04",
+        "direction": "outcome",
+        "transactionType": "transfer"
+      }
+    ]
+  }
+]

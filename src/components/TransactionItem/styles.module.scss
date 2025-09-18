@@ -1,0 +1,35 @@
+@use "../../../../shared/styles/index.scss" as *;
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: $margin-md;
+
+  .title {
+    font-size: $body-lg;
+    font-weight: $font-weight-semibold;
+  }
+
+  .date {
+    font-size: $body-md;
+    color: $color-text-200;
+    margin: $margin-sm $margin-none;
+  }
+
+  svg {
+    fill: $color-text-200;
+    margin-right: $margin-md;
+    margin-top: $margin-sm;
+  }
+
+  .value {
+    font-size: $body-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-success;
+
+    &.isCashWithdrawal {
+      color: $color-error;
+    }
+  }
+}

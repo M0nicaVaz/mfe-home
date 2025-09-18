@@ -1,0 +1,17 @@
+@use "../../../../shared/styles/index.scss" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 2;
+}
+
+.cardBox {
+  overflow-y: scroll;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-right: 0.5rem;
+  scrollbar-width: thin;
+}
