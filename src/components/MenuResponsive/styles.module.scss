@@ -1,0 +1,55 @@
+@use "../../../../shared/styles/index.scss" as *;
+
+.menuSide {
+  @include mobile-only {
+    display: none;
+  }
+
+  @include tablet-portrait {
+    display: flex;
+  }
+
+  @include desktop {
+    display: flex;
+  }
+
+  @include desktop-lg {
+    display: flex;
+  }
+}
+
+.menuHorizontal {
+  @include mobile-only {
+    display: none;
+  }
+
+  @include tablet-portrait {
+    display: block;
+  }
+
+  @include desktop {
+    display: none;
+  }
+
+  @include desktop-lg {
+    display: none;
+  }
+}
+
+.menuHamburger {
+  @include mobile-only {
+    display: block;
+  }
+
+  @include tablet-portrait {
+    display: none;
+  }
+
+  @include desktop {
+    display: none;
+  }
+
+  @include desktop-lg {
+    display: none;
+  }
+}

@@ -1,0 +1,24 @@
+@use "../../../../shared/styles/index.scss" as *;
+
+.container {
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.title {
+  margin-bottom: $margin-lg;
+  font-size: $title-sm;
+  font-weight: $font-weight-semibold;
+}
+
+.img {
+  height: auto;
+  align-self: center;
+  width: 26rem;
+}

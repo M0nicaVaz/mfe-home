@@ -1,0 +1,20 @@
+@use "../../../../shared/styles/index.scss" as *;
+
+.container {
+  margin-bottom: $margin-md;
+  .text {
+    font-size: $title-sm;
+    font-weight: $font-weight-bold;
+  }
+
+  .innerCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .isNegativeBalance {
+    color: $color-primary-accent-300;
+  }
+}

@@ -1,0 +1,13 @@
+@use "../../../../shared/styles/index.scss" as *;
+
+.content {
+  width: 100%;
+  height: $size-56;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  color: $color-brand-500;
+  font-size: $body-sm;
+  font-weight: $font-weight-bold;
+}
