@@ -30,7 +30,7 @@ export default function MenuHamburguer() {
               </li>
               <Divider />
               <li>
-                <Link href="">
+                <Link href="/statements">
                   <Button label="Transferências" priority="tertiary" />
                 </Link>
               </li>
