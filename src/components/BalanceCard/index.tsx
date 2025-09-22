@@ -1,16 +1,17 @@
 import { Card } from "shared";
 import styles from "./styles.module.scss";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { formatCurrency } from "shared/utils";
 import { Transaction } from "@/models/Transaction";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 interface BalanceCardProps {
   transactions: Transaction[];
 }
 
 export default function BalanceCard({ transactions }: BalanceCardProps) {
-  function calculateBalance(transactions: Transaction[]): number {
+  const calculateBalance = (transactions: Transaction[]): number => {
     return transactions.reduce((acc, tx) => {
       if (tx.direction === "income") {
         return acc + tx.amount;
@@ -19,9 +20,15 @@ export default function BalanceCard({ transactions }: BalanceCardProps) {
       }
       return acc;
     }, 0);
-  }
-  const isNegativeBalance = calculateBalance(transactions) < 0;
-  const saldo = useMemo(() => calculateBalance(transactions), [transactions]);
+  };
+
+  const balance = useMemo(() => calculateBalance(transactions), [transactions]);
+  const isNegativeBalance = balance < 0;
+
+  const [isHidden, setIsHidden] = useState(false);
+
+  const formattedBalance = formatCurrency(balance);
+  const maskedBalance = "R$ " + "*".repeat(Math.max(formattedBalance.length - 2, 0));
 
   return (
     <div className={styles.container}>
@@ -33,9 +40,15 @@ export default function BalanceCard({ transactions }: BalanceCardProps) {
                 isNegativeBalance ? styles.isNegativeBalance : ""
               }`}
             >
-              {formatCurrency(saldo)}
+              {isHidden ? maskedBalance : formattedBalance}
             </p>
-            <VisibilityOffIcon />
+            <button
+              type="button"
+              onClick={() => setIsHidden((prev) => !prev)}
+              className={styles.iconButton}
+            >
+              {isHidden ? <VisibilityIcon /> : <VisibilityOffIcon />}
+            </button>
           </div>
         </Card>
       </Card>
