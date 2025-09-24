@@ -1,0 +1,36 @@
+@use '../../../../shared/styles/index.scss' as *;
+
+.container {
+  margin-bottom: $margin-md;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $margin-sm;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: $margin-md;
+}
+
+.rangeControl {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: $margin-xs;
+}
+
+@include tablet-portrait {
+  .form {
+    grid-template-columns: 1fr;
+  }
+}
+
+@include mobile-only {
+  .form {
+    grid-template-columns: 1fr;
+  }
+}

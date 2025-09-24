@@ -1,14 +1,12 @@
 'use client';
 
-import { Transaction } from '@/models/Transaction';
 import BalanceCard from '../components/BalanceCard';
 import Header from '../components/Header';
 import styles from './styles.module.scss';
-import { useState } from 'react';
-import { transactions as mockTransactions } from '@/data/index';
+import { useTransactions } from '@/hooks/useTransactions';
 
 export default function Home() {
-  const [transactions] = useState<Transaction[]>(mockTransactions);
+  const { transactions } = useTransactions();
 
   return (
     <div className={styles.main}>
