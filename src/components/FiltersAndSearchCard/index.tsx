@@ -21,7 +21,7 @@ export function FiltersAndSearchCard() {
   } = useFilters();
 
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <Card title="Filtros e busca">
         <div className={styles.form}>
           <InputText
@@ -64,6 +64,6 @@ export function FiltersAndSearchCard() {
           />
         </div>
       </Card>
-    </div>
+    </section>
   );
 }
