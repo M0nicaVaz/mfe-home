@@ -2,10 +2,10 @@
 
 import { Card, InputSelect, InputText, Button } from 'shared';
 import { TransactionType } from '@/models/Transaction';
-import { TRANSACTION_TYPE_OPTIONS } from '@/stores/transactionsStore';
-import { useTransactionFilters } from '@/hooks/useTransactions';
 import styles from './styles.module.scss';
 import { RangeFilter } from '../RangeFilter';
+import { TRANSACTION_TYPE_OPTIONS } from '@/constants/filters';
+import { useFilters } from '@/hooks/useFilters';
 
 export function FiltersAndSearchCard() {
   const {
@@ -18,7 +18,7 @@ export function FiltersAndSearchCard() {
     endDate,
     setEndDate,
     resetFilters,
-  } = useTransactionFilters();
+  } = useFilters();
 
   return (
     <div className={styles.container}>

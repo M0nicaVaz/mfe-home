@@ -34,10 +34,13 @@ export type TransactionsDataHook = {
 
 export type TransactionsStore = {
   transactions: Transaction[];
-  filters: FiltersState;
   addTransaction: (transaction: Transaction) => void;
   updateTransaction: (transaction: Transaction) => void;
   deleteTransaction: (transaction: Transaction) => void;
+};
+
+export type TransactionFiltersStore = {
+  filters: FiltersState;
   setSearchTerm: (value: string) => void;
   setTypeFilter: (value: TransactionType | '') => void;
   setDirectionFilter: (value: TransactionDirection | '') => void;

@@ -4,8 +4,9 @@ import BalanceCard from '../../components/BalanceCard';
 import NewTransactionCard from '../../components/NewTransactionCard';
 import StatementList from '../../components/StatementList';
 import { FiltersAndSearchCard } from '../../components/FiltersAndSearchCard';
-import { useTransactionsData } from '@/hooks/useTransactions';
+import { useTransactions } from '@/hooks/useTransactions';
 import styles from './styles.module.scss';
+import Header from '@/components/Header';
 
 export default function Home() {
   const {
@@ -14,10 +15,13 @@ export default function Home() {
     addTransaction,
     updateTransaction,
     deleteTransaction,
-  } = useTransactionsData();
+  } = useTransactions();
 
   return (
     <div className={styles.main}>
+      <div className={styles.layout}>
+        <Header />
+      </div>
       <div className={styles.content}>
         <div className={styles.left}>
           <BalanceCard transactions={transactions} />

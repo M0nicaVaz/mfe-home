@@ -1,11 +1,11 @@
 import { formatCurrency } from 'shared/utils';
 
-import { AMOUNT_FILTER_LIMITS } from '@/stores/transactionsStore';
-import { useTransactionFilters } from '@/hooks/useTransactions';
+import { AMOUNT_FILTER_LIMITS } from '@/stores/filtersStore';
 import styles from './styles.module.scss';
+import { useFilters } from '@/hooks/useFilters';
 
 export function RangeFilter() {
-  const { minAmount, maxAmount, setAmountRange } = useTransactionFilters();
+  const { minAmount, maxAmount, setAmountRange } = useFilters();
   const AMOUNT_RANGE = AMOUNT_FILTER_LIMITS.max - AMOUNT_FILTER_LIMITS.min;
 
   const minPercentage =
