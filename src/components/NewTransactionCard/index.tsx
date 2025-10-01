@@ -1,7 +1,6 @@
 "use client";
 
-import { Card, InputSelect, InputText, Button } from "shared";
-import Image from "next/image";
+import { Card, InputSelect, InputText, Button, FileUploader } from "shared";
 import styles from "./styles.module.scss";
 import { Transaction, TransactionType } from "@/models/Transaction";
 import { useState } from "react";
@@ -37,14 +36,6 @@ export default function NewTransactionCard({ onAdd }: NewTransactionCardProps) {
     <div className={styles.container}>
       <Card>
         <div className={styles.content}>
-          <Image
-            src="/lp_img.png"
-            height={0}
-            width={0}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className={styles.img}
-            alt=""
-          />
           <h3 className={styles.title}>Nova transação</h3>
           <InputSelect
             name="type"
@@ -72,6 +63,8 @@ export default function NewTransactionCard({ onAdd }: NewTransactionCardProps) {
             labelText="Valor"
             placeholder="Digite o valor"
           />
+          <div style={{ height: "2em" }}></div>
+          <FileUploader />
           <div style={{ height: "2em" }}></div>
           <Button label="Confirmar" size="large" onClick={handleSubmit} />
         </div>

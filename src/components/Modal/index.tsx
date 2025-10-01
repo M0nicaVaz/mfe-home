@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./styles.module.scss";
-import { InputSelect, Button, InputText } from "shared";
+import { InputSelect, Button, InputText, FileUploader } from "shared";
 import { createPortal } from "react-dom";
 import { useMounted } from "../../hooks";
 import { Transaction, TransactionType } from "@/models/Transaction";
@@ -113,6 +113,7 @@ export default function Modal({
                 onChange={handleChange}
               />
             </div>
+            <FileUploader />
             <div className={styles.buttons}>
               <Button
                 label="Cancelar"
