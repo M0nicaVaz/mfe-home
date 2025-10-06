@@ -1,0 +1,59 @@
+@use "../../../../../../shared/styles/index.scss" as *;
+
+.container {
+  margin-bottom: $margin-md;
+  position: relative;
+
+  .innerCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    height: 30px;
+  }
+
+  .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .item {
+    width: 100%;
+    background: #fff;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+
+    .listItem {
+      width: 100% !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+  }
+
+  .itemInactive {
+    background: #f1f1f1;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px dashed #bbb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+}
+
