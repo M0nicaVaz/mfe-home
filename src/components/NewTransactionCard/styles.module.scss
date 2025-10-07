@@ -1,14 +1,14 @@
 @use "../../../../shared/styles/index.scss" as *;
 
-.container {
-  height: 100%;
-}
-
 .content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex: 1;
+}
+
+.container {
+  padding-bottom: $padding-md;
 }
 
 .title {
@@ -17,8 +17,8 @@
   font-weight: $font-weight-semibold;
 }
 
-.img {
-  height: auto;
-  align-self: center;
-  width: 26rem;
+.warning {
+  margin-top: $margin-sm;
+  padding: $padding-sm;
+  color: $color-secondary-accent-400;
 }

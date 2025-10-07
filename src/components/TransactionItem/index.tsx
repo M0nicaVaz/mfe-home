@@ -3,6 +3,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import styles from "./styles.module.scss";
 import Modal from "../Modal";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useState } from "react";
 import { Transaction } from "@/models/Transaction";
 import { capitalize, formatDate } from "shared/utils";
@@ -37,7 +38,8 @@ export default function TransactionItem({
       updatedData.amount ?? transaction.amount,
       updatedData.date ?? transaction.date,
       updatedData.direction ?? transaction.direction,
-      updatedData.type ?? transaction.type
+      updatedData.type ?? transaction.type,
+      updatedData.attachment ?? transaction.attachment
     );
     onUpdate(updated);
     setisOpen(false);
@@ -49,9 +51,17 @@ export default function TransactionItem({
     <>
       <div id={id}>
         <div className={styles.container}>
-          <div className={styles.leftColumn}>
+          <div>
             <p className={styles.title}>{capitalize(transaction.type)}</p>
             <p className={styles.date}>{formatDate(transaction.date)}</p>
+            {transaction.attachment ? (
+              <div className={styles.attachment}>
+                <AttachFileIcon className={styles.icon} />
+                <span className={styles.name}>
+                  {transaction.attachment?.name}
+                </span>
+              </div>
+            ) : null}
             <div className={styles.buttons}>
               <IconButton
                 priority="tertiary"
