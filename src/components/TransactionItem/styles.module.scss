@@ -32,4 +32,21 @@
       color: $color-error;
     }
   }
+
+  .attachment {
+    display: flex;
+    flex-direction: row;
+    .icon {
+      display: flex;
+      align-items: center;
+      margin: $margin-none $margin-sm $margin-none $margin-none;
+    }
+
+    .name {
+      font-size: $body-sm;
+      color: $color-text-200;
+      align-items: center;
+      display: flex;
+    }
+  }
 }

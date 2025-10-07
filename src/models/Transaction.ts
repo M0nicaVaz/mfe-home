@@ -7,6 +7,13 @@ export type TransactionType =
   | "transferência"
   | "outro";
 
+export type Attachment = {
+  name: string;
+  type: string;
+  size: number;
+  base64?: string; // usado para armazenar o conteúdo localmente (trocar quando tiver o S3)
+};
+
 export class Transaction {
   id: string;
   clientId: string;
@@ -14,6 +21,7 @@ export class Transaction {
   date: string;
   direction: TransactionDirection;
   type: TransactionType;
+  attachment?: Attachment;
 
   constructor(
     id: string,
@@ -21,7 +29,8 @@ export class Transaction {
     amount: number,
     date: string,
     direction: TransactionDirection,
-    type: TransactionType
+    type: TransactionType,
+    attachment?: Attachment
   ) {
     this.id = id;
     this.clientId = clientId;
@@ -29,6 +38,7 @@ export class Transaction {
     this.date = date;
     this.direction = direction;
     this.type = type;
+    this.attachment = attachment;
   }
 
   static typeToDirectionMap: Record<TransactionType, TransactionDirection> = {

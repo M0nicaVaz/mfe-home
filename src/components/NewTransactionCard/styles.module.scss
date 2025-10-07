@@ -1,9 +1,5 @@
 @use "../../../../shared/styles/index.scss" as *;
 
-.container {
-  height: 100%;
-}
-
 .content {
   display: flex;
   flex-direction: column;
@@ -11,8 +7,18 @@
   flex: 1;
 }
 
+.container {
+  padding-bottom: $padding-md;
+}
+
 .title {
   margin-bottom: $margin-lg;
   font-size: $title-sm;
   font-weight: $font-weight-semibold;
+}
+
+.warning {
+  margin-top: $margin-sm;
+  padding: $padding-sm;
+  color: $color-secondary-accent-400;
 }

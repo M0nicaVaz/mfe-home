@@ -4,9 +4,10 @@ import styles from "./styles.module.scss";
 import { InputSelect, Button, InputText, FileUploader } from "shared";
 import { createPortal } from "react-dom";
 import { useMounted } from "../../hooks";
-import { Transaction, TransactionType } from "@/models/Transaction";
+import { Transaction, TransactionType, Attachment } from "@/models/Transaction";
 import { useState, useEffect } from "react";
-import { formatCurrency, parseCurrencyInput } from "shared/utils";
+import { formatCurrency, parseCurrencyInput, fileToBase64 } from "shared/utils";
+import { useTransactionValidators } from "@/hooks/useTransactionValidators";
 
 type ModalProps = {
   initialData: Transaction;
@@ -21,18 +22,55 @@ export default function Modal({
   onSave,
   initialData,
 }: ModalProps) {
+  const {
+    type,
+    amount,
+    amountError,
+    touched,
+    isFormValid,
+    showInputError,
+    handleAmountChange,
+    handleTypeChange,
+    resetForm,
+    validateBeforeSubmit,
+  } = useTransactionValidators();
   const mounted = useMounted();
   const [data, setData] = useState(initialData);
 
   useEffect(() => {
     if (isOpened && initialData) {
       setData(initialData);
+      handleTypeChange(initialData.type);
+      handleAmountChange(initialData.amount);
     }
   }, [isOpened, initialData]);
 
   if (!mounted || !isOpened || !initialData) return null;
 
   const doc = document.body;
+
+  const handleFileSelect = async (file: File) => {
+    const base64 = await fileToBase64(file);
+    const newAttachment: Attachment = {
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      base64,
+    };
+
+    setData(
+      (prev) =>
+        new Transaction(
+          prev.id,
+          prev.clientId,
+          prev.amount,
+          prev.date,
+          prev.direction,
+          prev.type,
+          newAttachment
+        )
+    );
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
@@ -41,6 +79,7 @@ export default function Modal({
 
     if (name === "type") {
       const newType = value as TransactionType;
+      handleTypeChange(newType);
       setData(
         (prev) =>
           new Transaction(
@@ -49,36 +88,43 @@ export default function Modal({
             prev.amount,
             prev.date,
             Transaction.getDirectionFromType(newType),
-            newType
+            newType,
+            prev.attachment
           )
       );
     } else if (name === "amount") {
-      const newAmount = parseCurrencyInput(value);
-
+      const parsedAmount = parseCurrencyInput(value);
+      handleAmountChange(parsedAmount);
       setData(
         (prev) =>
           new Transaction(
             prev.id,
             prev.clientId,
-            newAmount,
+            parsedAmount,
             prev.date,
             prev.direction,
-            prev.type
+            prev.type,
+            prev.attachment
           )
       );
     }
   };
 
   const onHandleSave = () => {
+    if (!validateBeforeSubmit()) {
+      return;
+    }
     const updated = new Transaction(
       data.id,
       data.clientId,
       data.amount,
       data.date,
       data.direction,
-      data.type
+      data.type,
+      data.attachment
     );
     onSave(updated);
+    resetForm();
   };
 
   return (
@@ -93,7 +139,7 @@ export default function Modal({
             <div className={styles.inputs}>
               <InputSelect
                 name="type"
-                value={data.type}
+                value={type}
                 labelText="Selecione o tipo de transação"
                 placeholder="Selecione o tipo de transação"
                 onChange={handleChange}
@@ -109,11 +155,16 @@ export default function Modal({
               <InputText
                 name="amount"
                 labelText="Insira o valor"
-                value={formatCurrency(data.amount)}
+                value={formatCurrency(amount)}
                 onChange={handleChange}
+                isError={!!showInputError}
+                errorMessage={showInputError ? amountError : null}
               />
+              {amountError && amountError.includes("⚠️") && touched && (
+                <div className={styles.warning}>{amountError}</div>
+              )}
             </div>
-            <FileUploader />
+            <FileUploader onFileSelect={handleFileSelect} />
             <div className={styles.buttons}>
               <Button
                 label="Cancelar"
@@ -121,7 +172,12 @@ export default function Modal({
                 size="large"
                 onClick={handleModal}
               />
-              <Button label="Confirmar" size="large" onClick={onHandleSave} />
+              <Button
+                label="Confirmar"
+                size="large"
+                onClick={onHandleSave}
+                disabled={!isFormValid}
+              />
             </div>
           </dialog>
         </div>,
