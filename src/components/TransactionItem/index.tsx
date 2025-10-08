@@ -13,8 +13,8 @@ type TransactionItemProps = {
   transaction: Transaction;
   hasDivider?: boolean;
   isOpened?: boolean;
-  onUpdate: (updated: Transaction) => void;
-  onDelete: (deleted: Transaction) => void;
+  onUpdate: (updated: Transaction) => Promise<void>;
+  onDelete: (deleted: Transaction) => Promise<void>;
 };
 
 export default function TransactionItem({
@@ -30,8 +30,7 @@ export default function TransactionItem({
     setisOpen((prev) => !prev);
   };
 
-  const handleSave = (updatedData: Partial<Transaction>) => {
-    setisOpen((prev) => !prev);
+  const handleSave = async (updatedData: Partial<Transaction>) => {
     const updated = new Transaction(
       transaction.id,
       updatedData.clientId ?? transaction.clientId,
@@ -41,8 +40,12 @@ export default function TransactionItem({
       updatedData.type ?? transaction.type,
       updatedData.attachment ?? transaction.attachment
     );
-    onUpdate(updated);
-    setisOpen(false);
+    try {
+      await onUpdate(updated);
+      setisOpen(false);
+    } catch (error) {
+      console.error('[TransactionItem] Erro ao atualizar transação', error);
+    }
   };
 
   const isCashWithdrawal = transaction.direction === "outcome";
@@ -75,7 +78,16 @@ export default function TransactionItem({
                 priority="tertiary"
                 size="small"
                 icon={<DeleteIcon />}
-                onClick={() => onDelete(transaction)}
+                onClick={async () => {
+                  try {
+                    await onDelete(transaction);
+                  } catch (error) {
+                    console.error(
+                      '[TransactionItem] Erro ao remover transação',
+                      error,
+                    );
+                  }
+                }}
               />
             </div>
           </div>

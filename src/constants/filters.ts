@@ -1,4 +1,4 @@
-import { TransactionDirection, TransactionType } from '@/models/Transaction';
+import type { TransactionDirection, TransactionType } from 'shared';
 
 export const TRANSACTION_TYPE_LABELS: Record<TransactionType, string> = {
   depósito: 'Depósito',

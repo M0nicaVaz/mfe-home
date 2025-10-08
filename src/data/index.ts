@@ -1,11 +1,8 @@
 import mockClients from "./mock-clients.json";
 import mockTransactions from "./mock-transactions.json";
 import { Client } from "@/models/Client";
-import {
-  Transaction,
-  TransactionDirection,
-  TransactionType,
-} from "@/models/Transaction";
+import { Transaction } from "@/models/Transaction";
+import type { TransactionDirection, TransactionType } from "shared";
 
 interface TransactionData {
   id: string;

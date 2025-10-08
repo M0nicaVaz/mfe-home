@@ -2,16 +2,21 @@
 
 import { Card, InputSelect, InputText, Button, FileUploader } from "shared";
 import styles from "./styles.module.scss";
-import { Transaction, TransactionType, Attachment } from "@/models/Transaction";
+import { Transaction } from "@/models/Transaction";
+import type { TransactionType, Attachment } from "shared";
 import { formatCurrency, parseCurrencyInput, fileToBase64 } from "shared/utils";
 import { useTransactionValidators } from "@/hooks/useTransactionValidators";
 import { useState } from "react";
 
 interface NewTransactionCardProps {
-  onAdd: (transaction: Transaction) => void;
+  onAdd: (transaction: Transaction) => Promise<void>;
+  isLoading?: boolean;
 }
 
-export default function NewTransactionCard({ onAdd }: NewTransactionCardProps) {
+export default function NewTransactionCard({
+  onAdd,
+  isLoading = false,
+}: NewTransactionCardProps) {
   const {
     type,
     amount,
@@ -39,7 +44,7 @@ export default function NewTransactionCard({ onAdd }: NewTransactionCardProps) {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateBeforeSubmit()) {
       return;
     }
@@ -55,9 +60,13 @@ export default function NewTransactionCard({ onAdd }: NewTransactionCardProps) {
       attachment
     );
 
-    onAdd(newTransaction);
-    resetForm();
-    setAttachment(undefined);
+    try {
+      await onAdd(newTransaction);
+      resetForm();
+      setAttachment(undefined);
+    } catch (error) {
+      console.error('[NewTransactionCard] Erro ao adicionar transação', error);
+    }
   };
 
   return (
@@ -105,7 +114,7 @@ export default function NewTransactionCard({ onAdd }: NewTransactionCardProps) {
             label="Confirmar"
             size="large"
             onClick={handleSubmit}
-            disabled={!isFormValid}
+            disabled={!isFormValid || isLoading}
           />
         </div>
       </Card>
