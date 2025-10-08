@@ -85,8 +85,6 @@ const Dashboard = ({ transactions, order }: DashboardProps) => {
   const attachmentCounts = transactions.reduce<Record<string, number>>(
     (acc, t: Transaction) => {
       const key = t.attachment ? "Com Anexo" : "Sem Anexo";
-      
-      // Apenas incrementa 1 na chave correspondente
       acc[key] = (acc[key] || 0) + 1;
       
       return acc;
