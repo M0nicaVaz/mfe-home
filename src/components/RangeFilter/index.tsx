@@ -1,3 +1,5 @@
+"use client";
+
 import { formatCurrency } from 'shared/utils';
 
 import { AMOUNT_FILTER_LIMITS } from '@/stores/filtersStore';

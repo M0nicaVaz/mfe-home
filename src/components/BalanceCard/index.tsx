@@ -1,3 +1,5 @@
+"use client";
+
 import { Card } from "shared";
 import styles from "./styles.module.scss";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
