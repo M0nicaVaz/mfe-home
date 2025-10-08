@@ -82,23 +82,25 @@ const Dashboard = ({ transactions, order }: DashboardProps) => {
     ],
   };
 
-  const clientTotals = transactions.reduce<Record<string, number>>(
-    (acc, t) => {
-      acc[t.clientId] = (acc[t.clientId] || 0) + t.amount;
+  const attachmentCounts = transactions.reduce<Record<string, number>>(
+    (acc, t: Transaction) => {
+      const key = t.attachment ? "Com Anexo" : "Sem Anexo";
+      acc[key] = (acc[key] || 0) + 1;
+      
       return acc;
     },
-    {}
+    { "Com Anexo": 0, "Sem Anexo": 0 }
   );
-  const clientData = {
-    labels: Object.keys(clientTotals),
-    datasets: [
-      {
-        label: "Total movimentado",
-        data: Object.values(clientTotals),
-        backgroundColor: "#ab80fa",
-      },
-    ],
-  };
+  const attachmentData = {
+  labels: Object.keys(attachmentCounts),
+  datasets: [
+    {
+      label: "Total movimentado",
+      data: Object.values(attachmentCounts),
+      backgroundColor: "#ab80fa",
+    },
+  ],
+};
 
   const charts: Record<number, React.JSX.Element> = {
     1: <Doughnut data={typeData} options={{ maintainAspectRatio: false }} />,
@@ -106,8 +108,19 @@ const Dashboard = ({ transactions, order }: DashboardProps) => {
     3: <Bar data={barData} options={{ maintainAspectRatio: false }} />,
     4: (
       <Bar
-        data={clientData}
-        options={{ indexAxis: "y", maintainAspectRatio: false }}
+        data={attachmentData}
+        options={{
+          indexAxis: "y",
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              ticks: {
+                precision: 0
+              }
+            }
+          }
+        }}
+        
       />
     ),
   };
