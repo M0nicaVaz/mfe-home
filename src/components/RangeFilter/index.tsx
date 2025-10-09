@@ -1,10 +1,9 @@
 "use client";
 
-import { formatCurrency } from 'shared/utils';
-
-import { AMOUNT_FILTER_LIMITS } from '@/stores/filtersStore';
-import styles from './styles.module.scss';
-import { useFilters } from '@/hooks/useFilters';
+import { formatCurrency } from "shared/utils";
+import { AMOUNT_FILTER_LIMITS } from "@/stores/filtersStore";
+import { useFilters } from "@/hooks/useFilters";
+import styles from "./styles.module.scss";
 
 export function RangeFilter() {
   const { minAmount, maxAmount, setAmountRange } = useFilters();
@@ -39,9 +38,13 @@ export function RangeFilter() {
     setAmountRange({ min: normalizedMin, max: normalizedMax });
   };
 
+  const minId = "range-filter-min";
+  const maxId = "range-filter-max";
+
   return (
     <div className={styles.rangeControl}>
       <span className={styles.rangeLabel}>Faixa de valor (R$)</span>
+
       <div className={styles.sliderGroup}>
         <div className={styles.rangeTrack} />
         <div
@@ -51,24 +54,47 @@ export function RangeFilter() {
             width: `${Math.max(maxPercentage - minPercentage, 0)}%`,
           }}
         />
+
+        {/* Controle do valor mínimo */}
+        <label htmlFor={minId} className={styles.srOnly}>
+          Valor mínimo
+        </label>
         <input
+          id={minId}
           type="range"
           min={AMOUNT_FILTER_LIMITS.min}
           max={maxAmount}
           value={minAmount}
           onChange={(e) => handleMinAmountChange(Number(e.target.value))}
           className={`${styles.rangeInput} ${styles.rangeInputMin}`}
+          aria-valuemin={AMOUNT_FILTER_LIMITS.min}
+          aria-valuemax={maxAmount}
+          aria-valuenow={minAmount}
+          aria-label="Valor mínimo da faixa de preço"
+          aria-describedby="range-filter-description"
         />
+
+        {/* Controle do valor máximo */}
+        <label htmlFor={maxId} className={styles.srOnly}>
+          Valor máximo
+        </label>
         <input
+          id={maxId}
           type="range"
           min={minAmount}
           max={AMOUNT_FILTER_LIMITS.max}
           value={maxAmount}
           onChange={(e) => handleMaxAmountChange(Number(e.target.value))}
           className={`${styles.rangeInput} ${styles.rangeInputMax}`}
+          aria-valuemin={minAmount}
+          aria-valuemax={AMOUNT_FILTER_LIMITS.max}
+          aria-valuenow={maxAmount}
+          aria-label="Valor máximo da faixa de preço"
+          aria-describedby="range-filter-description"
         />
       </div>
-      <div className={styles.rangeValues}>
+
+      <div id="range-filter-description" className={styles.rangeValues}>
         <span>{formatCurrency(minAmount)}</span>
         <span>{formatCurrency(maxAmount)}</span>
       </div>

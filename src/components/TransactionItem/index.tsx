@@ -51,11 +51,23 @@ export default function TransactionItem({
 
   return (
     <>
-      <div id={id}>
+      <div id={id} aria-label="Transação">
         <div className={styles.container}>
           <div>
-            <p className={styles.title}>{capitalize(transaction.type)}</p>
-            <p className={styles.date}>{formatDate(transaction.date)}</p>
+            <p
+              className={styles.title}
+              aria-label={transaction.type}
+              tabIndex={0}
+            >
+              {capitalize(transaction.type)}
+            </p>
+            <p
+              className={styles.date}
+              aria-label={formatDate(transaction.date)}
+              tabIndex={0}
+            >
+              {formatDate(transaction.date)}
+            </p>
             {transaction.attachment ? (
               <div className={styles.attachment}>
                 <AttachFileIcon className={styles.icon} />
@@ -67,6 +79,7 @@ export default function TransactionItem({
             <div className={styles.buttons}>
               <IconButton
                 priority="tertiary"
+                ariaLabel="Editar transação"
                 size="small"
                 icon={<EditIcon />}
                 onClick={() => {
@@ -76,6 +89,7 @@ export default function TransactionItem({
               <IconButton
                 priority="tertiary"
                 size="small"
+                ariaLabel="Deletar transação"
                 icon={<DeleteIcon />}
                 onClick={() => onDelete(transaction)}
               />
@@ -83,6 +97,8 @@ export default function TransactionItem({
           </div>
           <div className={styles.rightColumn}>
             <p
+              aria-label={transaction.formattedAmount()}
+              tabIndex={0}
               className={` ${isCashWithdrawal ? styles.isCashWithdrawal : ""} ${
                 styles.value
               }`}

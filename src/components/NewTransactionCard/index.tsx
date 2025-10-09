@@ -62,9 +62,8 @@ export default function NewTransactionCard({ onAdd }: NewTransactionCardProps) {
 
   return (
     <div className={styles.container}>
-      <Card>
+      <Card title="Nova transação">
         <div className={styles.content}>
-          <h3 className={styles.title}>Nova transação</h3>
           <InputSelect
             name="type"
             value={type}

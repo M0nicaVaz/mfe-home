@@ -8,8 +8,10 @@ export default function Header() {
   return (
     <header className={styles.container}>
       <div className={styles.content}>
-        <h1 className={styles.title}>{client.name}</h1>
-        <IconButton icon={<PersonIcon />} />
+        <h1 className={styles.title} tabIndex={0}>
+          {client.name}
+        </h1>
+        <IconButton icon={<PersonIcon />} ariaLabel="Acessar perfil" />
       </div>
     </header>
   );

@@ -30,7 +30,8 @@ export default function BalanceCard({ transactions }: BalanceCardProps) {
   const [isHidden, setIsHidden] = useState(false);
 
   const formattedBalance = formatCurrency(balance);
-  const maskedBalance = "R$ " + "*".repeat(Math.max(formattedBalance.length - 2, 0));
+  const maskedBalance =
+    "R$ " + "*".repeat(Math.max(formattedBalance.length - 2, 0));
 
   return (
     <div className={styles.container}>
@@ -38,6 +39,8 @@ export default function BalanceCard({ transactions }: BalanceCardProps) {
         <Card color="secondary">
           <div className={styles.innerCard}>
             <p
+              tabIndex={0}
+              aria-label={isHidden ? "Saldo oculto" : formattedBalance}
               className={`${styles.text} ${
                 isNegativeBalance ? styles.isNegativeBalance : ""
               }`}
@@ -46,6 +49,7 @@ export default function BalanceCard({ transactions }: BalanceCardProps) {
             </p>
             <button
               type="button"
+              aria-label={isHidden ? "Visualizar saldo" : "Esconder saldo"}
               onClick={() => setIsHidden((prev) => !prev)}
               className={styles.iconButton}
             >
