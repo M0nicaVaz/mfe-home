@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "shared";
 import styles from "./styles.module.scss";
 import { items } from "shared/utils";

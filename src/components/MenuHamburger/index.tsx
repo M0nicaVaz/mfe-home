@@ -1,3 +1,5 @@
+"use client";
+
 import { IconButton, MenuHamburgerContent, Button, Divider } from "shared";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";
