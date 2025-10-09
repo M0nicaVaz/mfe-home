@@ -1,17 +1,14 @@
 import mockClients from "./mock-clients.json";
-import mockTransactions from "./mock-transactions.json";
 import { Client } from "@/models/Client";
 import { Transaction } from "@/models/Transaction";
-import type { TransactionDirection, TransactionType } from "shared";
+import { seedTransactions } from "shared/data";
+import type {
+  TransactionDTO,
+  TransactionDirection,
+  TransactionType,
+} from "shared/types";
 
-interface TransactionData {
-  id: string;
-  clientId: string;
-  amount: number;
-  date: string;
-  direction: TransactionDirection;
-  type: TransactionType;
-}
+type TransactionData = TransactionDTO;
 
 function parseTransaction(t: TransactionData): Transaction {
   return new Transaction(
@@ -24,12 +21,8 @@ function parseTransaction(t: TransactionData): Transaction {
   );
 }
 
-export const transactions: Transaction[] = mockTransactions.map((t) =>
-  parseTransaction({
-    ...t,
-    direction: t.direction as TransactionDirection,
-    type: t.type as TransactionType,
-  })
+export const transactions: Transaction[] = seedTransactions.map((transaction) =>
+  parseTransaction(transaction)
 );
 
 function parseClients(c: {
