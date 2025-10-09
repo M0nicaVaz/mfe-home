@@ -13,7 +13,7 @@ export default function MenuSide() {
         {items.map(({ icon, label, href }) => {
           const IconComponent = icon;
           return (
-            <Link key={label} href={href}>
+            <Link key={label} href={href} tabIndex={-1}>
               <Button
                 key={label}
                 label={label}

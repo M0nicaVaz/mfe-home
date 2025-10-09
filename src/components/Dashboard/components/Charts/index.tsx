@@ -10,11 +10,13 @@ type DashboardProps = {
   order: ChartListItem[];
 };
 
-const Dashboard = ({ transactions, order }: DashboardProps) => {
+export default function Dashboard({ transactions, order }: DashboardProps) {
+  // === Preparar dados dos gráficos ===
   const typeCounts = transactions.reduce<Record<string, number>>((acc, t) => {
     acc[t.type] = (acc[t.type] || 0) + 1;
     return acc;
   }, {});
+
   const typeData = {
     labels: Object.keys(typeCounts),
     datasets: [
@@ -35,15 +37,15 @@ const Dashboard = ({ transactions, order }: DashboardProps) => {
   const sorted = [...transactions].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   );
+
   let balance = 0;
   const cumulative = sorted.map((t) => {
     balance += t.direction === "income" ? t.amount : -t.amount;
     return { date: t.date, balance };
   });
+
   const lineData = {
-    labels: cumulative.map((c) =>
-      new Date(c.date).toLocaleDateString("pt-BR")
-    ),
+    labels: cumulative.map((c) => new Date(c.date).toLocaleDateString("pt-BR")),
     datasets: [
       {
         label: "Saldo acumulado",
@@ -66,6 +68,7 @@ const Dashboard = ({ transactions, order }: DashboardProps) => {
     acc[month][t.direction] += t.amount;
     return acc;
   }, {});
+
   const barData = {
     labels: Object.keys(monthly),
     datasets: [
@@ -82,13 +85,11 @@ const Dashboard = ({ transactions, order }: DashboardProps) => {
     ],
   };
 
-  const clientTotals = transactions.reduce<Record<string, number>>(
-    (acc, t) => {
-      acc[t.clientId] = (acc[t.clientId] || 0) + t.amount;
-      return acc;
-    },
-    {}
-  );
+  const clientTotals = transactions.reduce<Record<string, number>>((acc, t) => {
+    acc[t.clientId] = (acc[t.clientId] || 0) + t.amount;
+    return acc;
+  }, {});
+
   const clientData = {
     labels: Object.keys(clientTotals),
     datasets: [
@@ -100,14 +101,60 @@ const Dashboard = ({ transactions, order }: DashboardProps) => {
     ],
   };
 
-  const charts: Record<number, React.JSX.Element> = {
-    1: <Doughnut data={typeData} options={{ maintainAspectRatio: false }} />,
-    2: <Line data={lineData} options={{ maintainAspectRatio: false }} />,
-    3: <Bar data={barData} options={{ maintainAspectRatio: false }} />,
+  // === Função para gerar descrição textual dos gráficos ===
+  const generateChartDescription = (id: number) => {
+    switch (id) {
+      case 1:
+        return `Tipos de transações: ${typeData.labels
+          .map((label, i) => `${label}: ${typeData.datasets[0].data[i]}`)
+          .join(", ")}`;
+      case 2:
+        return `Saldo acumulado ao longo do tempo: ${lineData.labels
+          .map((date, i) => `${date}: ${lineData.datasets[0].data[i]}`)
+          .join(", ")}`;
+      case 3:
+        return `Receitas e despesas por mês: ${barData.labels
+          .map(
+            (month, i) =>
+              `${month}: Receitas ${barData.datasets[0].data[i]}, Despesas ${barData.datasets[1].data[i]}`
+          )
+          .join(", ")}`;
+      case 4:
+        return `Total movimentado por cliente: ${clientData.labels
+          .map((client, i) => `${client}: ${clientData.datasets[0].data[i]}`)
+          .join(", ")}`;
+      default:
+        return "";
+    }
+  };
+
+  const charts: Record<number, React.ReactNode> = {
+    1: (
+      <Doughnut
+        data={typeData}
+        options={{ maintainAspectRatio: false }}
+        aria-hidden="true"
+      />
+    ),
+    2: (
+      <Line
+        data={lineData}
+        options={{ maintainAspectRatio: false }}
+        aria-hidden="true"
+      />
+    ),
+    3: (
+      <Bar
+        data={barData}
+        options={{ maintainAspectRatio: false }}
+        aria-hidden="true"
+      />
+    ),
     4: (
       <Bar
         data={clientData}
         options={{ indexAxis: "y", maintainAspectRatio: false }}
+        aria-hidden="true"
       />
     ),
   };
@@ -115,13 +162,19 @@ const Dashboard = ({ transactions, order }: DashboardProps) => {
   return (
     <div className={styles.dashboard}>
       {order.map((item) => (
-        <div key={item.id} className={styles.card}>
+        <div key={item.id} className={styles.card} tabIndex={0}>
+          {/* Título do gráfico */}
           <h2>{item.label}</h2>
+
+          {/* Gráfico visual */}
           {charts[item.id]}
+
+          {/* Texto alternativo para leitores de tela */}
+          <div className={styles.srOnly}>
+            {generateChartDescription(item.id)}
+          </div>
         </div>
       ))}
     </div>
   );
-};
-
-export default Dashboard;
+}
