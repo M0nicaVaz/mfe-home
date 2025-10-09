@@ -163,13 +163,8 @@ export default function Dashboard({ transactions, order }: DashboardProps) {
     <div className={styles.dashboard}>
       {order.map((item) => (
         <div key={item.id} className={styles.card} tabIndex={0}>
-          {/* Título do gráfico */}
           <h2>{item.label}</h2>
-
-          {/* Gráfico visual */}
           {charts[item.id]}
-
-          {/* Texto alternativo para leitores de tela */}
           <div className={styles.srOnly}>
             {generateChartDescription(item.id)}
           </div>
