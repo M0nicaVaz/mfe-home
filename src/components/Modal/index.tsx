@@ -4,7 +4,8 @@ import styles from "./styles.module.scss";
 import { InputSelect, Button, InputText, FileUploader } from "shared";
 import { createPortal } from "react-dom";
 import { useMounted } from "../../hooks";
-import { Transaction, TransactionType, Attachment } from "@/models/Transaction";
+import { Transaction } from "@/models/Transaction";
+import type { TransactionType, Attachment } from "shared";
 import { useState, useEffect } from "react";
 import { formatCurrency, parseCurrencyInput, fileToBase64 } from "shared/utils";
 import { useTransactionValidators } from "@/hooks/useTransactionValidators";
@@ -12,7 +13,7 @@ import { useTransactionValidators } from "@/hooks/useTransactionValidators";
 type ModalProps = {
   initialData: Transaction;
   isOpened: boolean;
-  onSave: (data: Partial<Transaction>) => void;
+  onSave: (data: Partial<Transaction>) => Promise<void>;
   handleModal: () => void;
 };
 
@@ -33,17 +34,22 @@ export default function Modal({
     handleTypeChange,
     resetForm,
     validateBeforeSubmit,
+    setType,
+    setAmount,
+    setTouched,
   } = useTransactionValidators();
   const mounted = useMounted();
   const [data, setData] = useState(initialData);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (isOpened && initialData) {
       setData(initialData);
-      handleTypeChange(initialData.type);
-      handleAmountChange(initialData.amount);
+      setType(initialData.type);
+      setAmount(initialData.amount);
+      setTouched(false);
     }
-  }, [isOpened, initialData]);
+  }, [isOpened, initialData, setAmount, setType, setTouched]);
 
   if (!mounted || !isOpened || !initialData) return null;
 
@@ -110,7 +116,7 @@ export default function Modal({
     }
   };
 
-  const onHandleSave = () => {
+  const onHandleSave = async () => {
     if (!validateBeforeSubmit()) {
       return;
     }
@@ -123,8 +129,15 @@ export default function Modal({
       data.type,
       data.attachment
     );
-    onSave(updated);
-    resetForm();
+    setIsSubmitting(true);
+    try {
+      await onSave(updated);
+      resetForm();
+    } catch (error) {
+      console.error('[Modal] Erro ao salvar transação', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -176,7 +189,7 @@ export default function Modal({
                 label="Confirmar"
                 size="large"
                 onClick={onHandleSave}
-                disabled={!isFormValid}
+                disabled={!isFormValid || isSubmitting}
               />
             </div>
           </dialog>

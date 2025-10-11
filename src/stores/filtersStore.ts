@@ -1,7 +1,7 @@
 'use client';
 
 import { create } from 'zustand';
-import { TransactionDirection, TransactionType } from '@/models/Transaction';
+import type { TransactionDirection, TransactionType } from 'shared';
 import { FiltersState, TransactionFiltersStore } from '@/types/transactions';
 
 export const AMOUNT_FILTER_LIMITS = {

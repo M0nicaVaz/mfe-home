@@ -1,18 +1,9 @@
-export type TransactionDirection = "income" | "outcome";
-export type TransactionType =
-  | "depósito"
-  | "saque"
-  | "investimento"
-  | "pagamento"
-  | "transferência"
-  | "outro";
-
-export type Attachment = {
-  name: string;
-  type: string;
-  size: number;
-  base64?: string; // usado para armazenar o conteúdo localmente (trocar quando tiver o S3)
-};
+import type {
+  TransactionDirection,
+  TransactionType,
+  Attachment,
+  TransactionDTO,
+} from 'shared';
 
 export class Transaction {
   id: string;
@@ -49,6 +40,18 @@ export class Transaction {
     transferência: "outcome",
     outro: "outcome",
   };
+
+  static fromDTO(dto: TransactionDTO): Transaction {
+    return new Transaction(
+      dto.id,
+      dto.clientId,
+      dto.amount,
+      dto.date,
+      dto.direction,
+      dto.type,
+      dto.attachment
+    );
+  }
 
   formattedAmount(): string {
     const sign = this.direction === "income" ? "+" : "-";

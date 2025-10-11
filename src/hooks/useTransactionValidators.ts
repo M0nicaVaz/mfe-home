@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { TransactionType } from "@/models/Transaction";
+import type { TransactionType } from "shared";
 
 const validateAmount = (amount: number): string | null => {
   if (amount <= 0) {

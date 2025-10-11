@@ -34,7 +34,7 @@ ChartJS.register(
 
 
 export function Dashboard() {
-  const { transactions } = useTransactions();
+  const { transactions, isLoading, error } = useTransactions();
   const defaultItems: ChartListItem[] = [
     {id: 1, label: 'Distribuição por tipo'},
     {id: 2, label: 'Saldo acumulado'},
@@ -42,6 +42,14 @@ export function Dashboard() {
     {id: 4, label: 'Transações com Anexo'},
   ];
   const [order, setOrder] = useState<ChartListItem[]>(defaultItems);
+
+  if (isLoading && transactions.length === 0) {
+    return <p>Carregando transações...</p>;
+  }
+
+  if (error) {
+    return <p>Não foi possível carregar as transações: {error}</p>;
+  }
 
   return (
     <section>
