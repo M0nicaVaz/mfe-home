@@ -12,6 +12,9 @@ export type Attachment = {
   type: string;
   size: number;
   base64?: string; // usado para armazenar o conteúdo localmente (trocar quando tiver o S3)
+  url?: string;
+  key?: string;
+  file?: File | Blob;
 };
 
 export class Transaction {

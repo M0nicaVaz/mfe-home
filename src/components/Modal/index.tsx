@@ -50,12 +50,11 @@ export default function Modal({
   const doc = document.body;
 
   const handleFileSelect = async (file: File) => {
-    const base64 = await fileToBase64(file);
     const newAttachment: Attachment = {
       name: file.name,
       type: file.type,
       size: file.size,
-      base64,
+      file,
     };
 
     setData(
