@@ -6,6 +6,7 @@ import { Transaction, TransactionType, Attachment } from "@/models/Transaction";
 import { formatCurrency, parseCurrencyInput, fileToBase64 } from "shared/utils";
 import { useTransactionValidators } from "@/hooks/useTransactionValidators";
 import { useState } from "react";
+import { uploadToS3 } from "../../utils/uploadFile"
 
 interface NewTransactionCardProps {
   onAdd: (transaction: Transaction) => void;
@@ -30,18 +31,27 @@ export default function NewTransactionCard({ onAdd }: NewTransactionCardProps) {
   );
 
   const handleFileSelect = async (file: File) => {
-    const base64 = await fileToBase64(file);
     setAttachment({
       name: file.name,
       type: file.type,
       size: file.size,
-      base64,
+      file,
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateBeforeSubmit()) {
       return;
+    }
+
+    if(attachment?.file) {
+      try {
+        const { url, key } = await uploadToS3(attachment.file as File);
+        attachment.url = url;
+        attachment.key = key;
+      } catch (err) {
+        console.log(err)
+      }
     }
 
     const direction = Transaction.getDirectionFromType(type);
@@ -98,7 +108,10 @@ export default function NewTransactionCard({ onAdd }: NewTransactionCardProps) {
             <div className={styles.warning}>{amountError}</div>
           )}
           <div style={{ height: "2em" }}></div>
-          <FileUploader onFileSelect={handleFileSelect} />
+          <FileUploader 
+            file={attachment?.file}
+            onFileSelect={handleFileSelect} 
+          />
           <div style={{ height: "2em" }}></div>
           <Button
             label="Confirmar"
