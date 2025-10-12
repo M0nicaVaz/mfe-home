@@ -1,8 +1,9 @@
-import {
-  Transaction,
+import type {
+  TransactionDTO as SharedTransactionDTO,
   TransactionDirection,
   TransactionType,
-} from '@/models/Transaction';
+} from 'shared';
+import { Transaction } from '@/models/Transaction';
 
 export type FiltersState = {
   searchTerm: string;
@@ -24,19 +25,27 @@ export type TransactionFiltersHook = FiltersState & {
   resetFilters: () => void;
 };
 
+export type TransactionDTO = SharedTransactionDTO;
+
 export type TransactionsDataHook = {
   transactions: Transaction[];
   filteredTransactions: Transaction[];
-  addTransaction: (transaction: Transaction) => void;
-  updateTransaction: (transaction: Transaction) => void;
-  deleteTransaction: (transaction: Transaction) => void;
+  isLoading: boolean;
+  error: string | null;
+  fetchTransactions: () => Promise<void>;
+  addTransaction: (transaction: Transaction) => Promise<void>;
+  updateTransaction: (transaction: Transaction) => Promise<void>;
+  deleteTransaction: (transaction: Transaction) => Promise<void>;
 };
 
 export type TransactionsStore = {
   transactions: Transaction[];
-  addTransaction: (transaction: Transaction) => void;
-  updateTransaction: (transaction: Transaction) => void;
-  deleteTransaction: (transaction: Transaction) => void;
+  isLoading: boolean;
+  error: string | null;
+  fetchTransactions: () => Promise<void>;
+  addTransaction: (transaction: Transaction) => Promise<void>;
+  updateTransaction: (transaction: Transaction) => Promise<void>;
+  deleteTransaction: (transaction: Transaction) => Promise<void>;
 };
 
 export type TransactionFiltersStore = {

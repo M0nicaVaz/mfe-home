@@ -16,6 +16,12 @@ export type Attachment = {
   key?: string;
   file?: File | Blob;
 };
+import type {
+  TransactionDirection,
+  TransactionType,
+  Attachment,
+  TransactionDTO,
+} from 'shared';
 
 export class Transaction {
   id: string;
@@ -52,6 +58,18 @@ export class Transaction {
     transferência: "outcome",
     outro: "outcome",
   };
+
+  static fromDTO(dto: TransactionDTO): Transaction {
+    return new Transaction(
+      dto.id,
+      dto.clientId,
+      dto.amount,
+      dto.date,
+      dto.direction,
+      dto.type,
+      dto.attachment
+    );
+  }
 
   formattedAmount(): string {
     const sign = this.direction === "income" ? "+" : "-";

@@ -4,20 +4,29 @@ Dashboard do aplicativo financeiro.
 
 ## Desenvolvimento
 
+### Pré-requisitos
+- `shared` deve estar instalado (`npm install` na raiz do monorepo e em `shared/`).
+- Defina `NEXT_PUBLIC_API_URL` em `home/.env.local` (veja `.env.example`).
+
 ### Com Docker
 ```bash
 docker build -t mfe-home .
-docker run -p 4444:4444 -v $(pwd):/app -v /app/node_modules mfe-home
+docker run \
+  -p 4444:4444 \
+  -e NEXT_PUBLIC_API_URL=http://localhost:5555/api \
+  -v $(pwd):/app \
+  -v /app/node_modules \
+  mfe-home
 ```
 
 ### Sem Docker
 ```bash
 npm install
-npm run dev
+NEXT_PUBLIC_API_URL=http://localhost:5555/api npm run dev
 ```
 
-Acesse: http://localhost:4444/home
+Acesse: http://localhost:4444/home (base path `/home`).
 
-## Porta
+## Portas
 - Desenvolvimento: 4444
-- Base path: `/home`
+- Backend esperado: `http://localhost:5555/api`

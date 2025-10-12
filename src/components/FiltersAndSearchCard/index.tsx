@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, InputSelect, InputText, Button } from 'shared';
-import { TransactionType } from '@/models/Transaction';
+import type { TransactionType } from 'shared';
 import styles from './styles.module.scss';
 import { RangeFilter } from '../RangeFilter';
 import { TRANSACTION_TYPE_OPTIONS } from '@/constants/filters';

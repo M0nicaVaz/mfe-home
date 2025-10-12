@@ -12,6 +12,8 @@ export default function Home() {
   const {
     transactions,
     filteredTransactions,
+    isLoading,
+    error,
     addTransaction,
     updateTransaction,
     deleteTransaction,
@@ -29,11 +31,13 @@ export default function Home() {
             onDelete={deleteTransaction}
             transactions={filteredTransactions}
             onUpdate={updateTransaction}
+            isLoading={isLoading}
+            error={error}
           />
         </div>
         <div className={styles.right}>
           <FiltersAndSearchCard />
-          <NewTransactionCard onAdd={addTransaction} />
+          <NewTransactionCard onAdd={addTransaction} isLoading={isLoading} />
         </div>
       </div>
     </div>
