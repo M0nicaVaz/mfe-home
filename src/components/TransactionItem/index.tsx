@@ -6,9 +6,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import styles from "./styles.module.scss";
 import Modal from "../Modal";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import DownloadIcon from "@mui/icons-material/Download";
 import { useState } from "react";
 import { Transaction } from "@/models/Transaction";
 import { capitalize, formatDate } from "shared/utils";
+import { downloadFromS3 } from "@/utils/uploadFile";
 
 type TransactionItemProps = {
   id?: string;
@@ -49,6 +51,10 @@ export default function TransactionItem({
       console.error('[TransactionItem] Erro ao atualizar transação', error);
     }
   };
+
+  const fileDownload = async (key: string) => {
+    await downloadFromS3(key);
+  }
 
   const isCashWithdrawal = transaction.direction === "outcome";
 
@@ -105,6 +111,15 @@ export default function TransactionItem({
                   }
                 }}
               />
+              {transaction.attachment ? (
+                <IconButton
+                  priority="tertiary"
+                  size="small"
+                  ariaLabel="Baixar anexo"
+                  icon={<DownloadIcon />}
+                  onClick={() => fileDownload(transaction?.attachment?.key as string)}
+                />
+            ) : null}
             </div>
           </div>
           <div className={styles.rightColumn}>

@@ -1,3 +1,21 @@
+export type TransactionDirection = "income" | "outcome";
+export type TransactionType =
+  | "depósito"
+  | "saque"
+  | "investimento"
+  | "pagamento"
+  | "transferência"
+  | "outro";
+
+export type Attachment = {
+  name: string;
+  type: string;
+  size: number;
+  base64?: string; // usado para armazenar o conteúdo localmente (trocar quando tiver o S3)
+  url?: string;
+  key?: string;
+  file?: File | Blob;
+};
 import type {
   TransactionDirection,
   TransactionType,
