@@ -31,31 +31,33 @@ export default function RegisterPage() {
       <Card title="Criar Conta">
         <form onSubmit={handleSubmit} className={styles.form}>
           <InputText
-            label="Nome"
+            name="name"
+            labelText="Nome"
+            placeholder="Digite o seu nome completo"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required
             disabled={isLoading}
           />
 
           <InputText
-            label="Email"
+            name="email"
+            labelText="Email"
+            placeholder="Digite seu email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
             disabled={isLoading}
           />
 
           <InputText
-            label="Senha"
+            name="password"
+            labelText="Senha"
+            placeholder="Mínimo 6 caracteres"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
             disabled={isLoading}
-            minLength={6}
           />
 
           {error && <p className={styles.error}>{error}</p>}

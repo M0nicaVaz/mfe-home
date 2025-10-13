@@ -30,20 +30,22 @@ export default function LoginPage() {
       <Card title="Login">
         <form onSubmit={handleSubmit} className={styles.form}>
           <InputText
-            label="Email"
+            name="email"
+            labelText="Email"
+            placeholder="Digite seu email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
             disabled={isLoading}
           />
 
           <InputText
-            label="Senha"
+            name="password"
+            labelText="Senha"
+            placeholder="Digite sua senha"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
             disabled={isLoading}
           />
 
