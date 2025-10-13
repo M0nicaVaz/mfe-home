@@ -85,21 +85,25 @@ export default function Dashboard({ transactions, order }: DashboardProps) {
     ],
   };
 
-  const clientTotals = transactions.reduce<Record<string, number>>((acc, t) => {
-    acc[t.clientId] = (acc[t.clientId] || 0) + t.amount;
-    return acc;
-  }, {});
+  const attachmentCounts = transactions.reduce<Record<string, number>>(
+    (acc, t: Transaction) => {
+      const key = t.attachment ? "Com Anexo" : "Sem Anexo";
+      acc[key] = (acc[key] || 0) + 1;
 
-  const clientData = {
-    labels: Object.keys(clientTotals),
-    datasets: [
-      {
-        label: "Total movimentado",
-        data: Object.values(clientTotals),
-        backgroundColor: "#ab80fa",
-      },
-    ],
-  };
+      return acc;
+    },
+    { "Com Anexo": 0, "Sem Anexo": 0 }
+  );
+  const attachmentData = {
+  labels: Object.keys(attachmentCounts),
+  datasets: [
+    {
+      label: "Total movimentado",
+      data: Object.values(attachmentCounts),
+      backgroundColor: "#ab80fa",
+    },
+  ],
+};
 
   // === Função para gerar descrição textual dos gráficos ===
   const generateChartDescription = (id: number) => {
@@ -120,8 +124,8 @@ export default function Dashboard({ transactions, order }: DashboardProps) {
           )
           .join(", ")}`;
       case 4:
-        return `Total movimentado por cliente: ${clientData.labels
-          .map((client, i) => `${client}: ${clientData.datasets[0].data[i]}`)
+        return `Transações com anexo: ${attachmentData.labels
+          .map((label, i) => `${label}: ${attachmentData.datasets[0].data[i]}`)
           .join(", ")}`;
       default:
         return "";
@@ -152,9 +156,19 @@ export default function Dashboard({ transactions, order }: DashboardProps) {
     ),
     4: (
       <Bar
-        data={clientData}
-        options={{ indexAxis: "y", maintainAspectRatio: false }}
-        aria-hidden="true"
+        data={attachmentData}
+        options={{
+          indexAxis: "y",
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              ticks: {
+                precision: 0
+              }
+            }
+          }
+        }}
+
       />
     ),
   };
