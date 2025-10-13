@@ -17,24 +17,30 @@ const initialFilters: FiltersState = {
   endDate: '',
   minAmount: AMOUNT_FILTER_LIMITS.min,
   maxAmount: AMOUNT_FILTER_LIMITS.max,
+  currentPage: 1,
+  itemsPerPage: 10,
 };
 
 export const useFiltersStore = create<TransactionFiltersStore>((set) => ({
   filters: { ...initialFilters },
   setSearchTerm: (value: string) =>
-    set((state) => ({ filters: { ...state.filters, searchTerm: value } })),
+    set((state) => ({ filters: { ...state.filters, searchTerm: value, currentPage: 1 } })),
   setTypeFilter: (value: TransactionType | '') =>
-    set((state) => ({ filters: { ...state.filters, typeFilter: value } })),
+    set((state) => ({ filters: { ...state.filters, typeFilter: value, currentPage: 1 } })),
   setDirectionFilter: (value: TransactionDirection | '') =>
-    set((state) => ({ filters: { ...state.filters, directionFilter: value } })),
+    set((state) => ({ filters: { ...state.filters, directionFilter: value, currentPage: 1 } })),
   setStartDate: (value: string) =>
-    set((state) => ({ filters: { ...state.filters, startDate: value } })),
+    set((state) => ({ filters: { ...state.filters, startDate: value, currentPage: 1 } })),
   setEndDate: (value: string) =>
-    set((state) => ({ filters: { ...state.filters, endDate: value } })),
+    set((state) => ({ filters: { ...state.filters, endDate: value, currentPage: 1 } })),
   setAmountRange: ({ min, max }: { min: number; max: number }) =>
     set((state) => ({
-      filters: { ...state.filters, minAmount: min, maxAmount: max },
+      filters: { ...state.filters, minAmount: min, maxAmount: max, currentPage: 1 },
     })),
+  setCurrentPage: (page: number) =>
+    set((state) => ({ filters: { ...state.filters, currentPage: page } })),
+  setItemsPerPage: (items: number) =>
+    set((state) => ({ filters: { ...state.filters, itemsPerPage: items, currentPage: 1 } })),
   resetFilters: () => set({ filters: { ...initialFilters } }),
 }));
 

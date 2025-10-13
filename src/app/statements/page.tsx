@@ -11,12 +11,15 @@ import Header from '@/components/Header';
 export default function Home() {
   const {
     transactions,
-    filteredTransactions,
+    paginatedTransactions,
     isLoading,
     error,
     addTransaction,
     updateTransaction,
     deleteTransaction,
+    currentPage,
+    totalPages,
+    setCurrentPage,
   } = useTransactions();
 
   return (
@@ -29,10 +32,13 @@ export default function Home() {
           <BalanceCard transactions={transactions} />
           <StatementList
             onDelete={deleteTransaction}
-            transactions={filteredTransactions}
+            transactions={paginatedTransactions}
             onUpdate={updateTransaction}
             isLoading={isLoading}
             error={error}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
           />
         </div>
         <div className={styles.right}>

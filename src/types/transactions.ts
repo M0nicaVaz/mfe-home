@@ -13,6 +13,8 @@ export type FiltersState = {
   endDate: string;
   minAmount: number;
   maxAmount: number;
+  currentPage: number;
+  itemsPerPage: number;
 };
 
 export type TransactionFiltersHook = FiltersState & {
@@ -30,12 +32,16 @@ export type TransactionDTO = SharedTransactionDTO;
 export type TransactionsDataHook = {
   transactions: Transaction[];
   filteredTransactions: Transaction[];
+  paginatedTransactions: Transaction[];
+  totalPages: number;
+  currentPage: number;
   isLoading: boolean;
   error: string | null;
   fetchTransactions: () => Promise<void>;
   addTransaction: (transaction: Transaction) => Promise<void>;
   updateTransaction: (transaction: Transaction) => Promise<void>;
   deleteTransaction: (transaction: Transaction) => Promise<void>;
+  setCurrentPage: (page: number) => void;
 };
 
 export type TransactionsStore = {
@@ -56,5 +62,7 @@ export type TransactionFiltersStore = {
   setStartDate: (value: string) => void;
   setEndDate: (value: string) => void;
   setAmountRange: (range: { min: number; max: number }) => void;
+  setCurrentPage: (page: number) => void;
+  setItemsPerPage: (items: number) => void;
   resetFilters: () => void;
 };

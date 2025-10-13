@@ -11,6 +11,8 @@ export function useFilters(): TransactionFiltersHook {
   const endDate = useFiltersStore((state) => state.filters.endDate);
   const minAmount = useFiltersStore((state) => state.filters.minAmount);
   const maxAmount = useFiltersStore((state) => state.filters.maxAmount);
+  const currentPage = useFiltersStore((state) => state.filters.currentPage);
+  const itemsPerPage = useFiltersStore((state) => state.filters.itemsPerPage);
 
   const setSearchTerm = useFiltersStore((state) => state.setSearchTerm);
   const setTypeFilter = useFiltersStore((state) => state.setTypeFilter);
@@ -30,6 +32,8 @@ export function useFilters(): TransactionFiltersHook {
     endDate,
     minAmount,
     maxAmount,
+    currentPage,
+    itemsPerPage,
     setSearchTerm,
     setTypeFilter,
     setDirectionFilter,

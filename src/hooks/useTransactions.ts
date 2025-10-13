@@ -7,7 +7,7 @@ import {
 } from '@/stores/transactionsStore';
 import { TransactionsDataHook } from '@/types/transactions';
 import { filterTransactions } from '@/utils/filterTransactions';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 export function useTransactions(): TransactionsDataHook {
   const transactions = useTransactionsStore(selectTransactions);
@@ -29,16 +29,30 @@ export function useTransactions(): TransactionsDataHook {
   }, [fetchTransactions]);
 
   const filters = useFiltersStore(selectFilters);
+  const setCurrentPage = useFiltersStore((state) => state.setCurrentPage);
   const filteredTransactions = filterTransactions(transactions, filters);
+
+  const { paginatedTransactions, totalPages } = useMemo(() => {
+    const startIndex = (filters.currentPage - 1) * filters.itemsPerPage;
+    const endIndex = startIndex + filters.itemsPerPage;
+    const paginatedTransactions = filteredTransactions.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(filteredTransactions.length / filters.itemsPerPage);
+
+    return { paginatedTransactions, totalPages };
+  }, [filteredTransactions, filters.currentPage, filters.itemsPerPage]);
 
   return {
     transactions,
     filteredTransactions,
+    paginatedTransactions,
+    totalPages,
+    currentPage: filters.currentPage,
     isLoading,
     error,
     fetchTransactions,
     addTransaction,
     updateTransaction,
     deleteTransaction,
+    setCurrentPage,
   };
 }

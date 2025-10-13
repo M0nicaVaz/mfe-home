@@ -1,0 +1,53 @@
+@use "../../../../shared/styles/index.scss" as *;
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-top: $margin-md;
+  padding: $padding-md $padding-none;
+}
+
+.button {
+  min-width: $size-40;
+  height: $size-40;
+  padding: $padding-sm;
+  border: $border-width-sm solid $color-border-300;
+  background-color: $color-bg-100;
+  color: $color-text-300;
+  border-radius: $radius-md;
+  cursor: pointer;
+  font-size: $body-md;
+  font-weight: $font-weight-medium;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover:not(:disabled):not(.ellipsis) {
+    background-color: $color-bg-200;
+    border-color: $color-brand-400;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.active {
+    background-color: $color-brand-400;
+    color: $color-text-100;
+    border-color: $color-brand-400;
+  }
+
+  &.ellipsis {
+    border: none;
+    cursor: default;
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}

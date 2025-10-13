@@ -1,6 +1,7 @@
 "use client";
 import { Card } from "shared";
 import TransactionItem from "../TransactionItem";
+import Pagination from "../Pagination";
 import styles from "./styles.module.scss";
 import { Transaction } from "@/models/Transaction";
 import { ReactNode } from "react";
@@ -11,6 +12,9 @@ interface StatementListProps {
   onDelete: (deleted: Transaction) => Promise<void>;
   isLoading?: boolean;
   error?: string | null;
+  currentPage?: number;
+  totalPages?: number;
+  onPageChange?: (page: number) => void;
 }
 
 export default function StatementList({
@@ -19,6 +23,9 @@ export default function StatementList({
   onDelete,
   isLoading = false,
   error = null,
+  currentPage = 1,
+  totalPages = 1,
+  onPageChange,
 }: StatementListProps) {
   let content: ReactNode;
 
@@ -46,6 +53,13 @@ export default function StatementList({
         <div className={styles.cardBox}>
           {content}
         </div>
+        {onPageChange && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+          />
+        )}
       </Card>
     </div>
   );
