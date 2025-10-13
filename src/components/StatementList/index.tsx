@@ -51,15 +51,19 @@ export default function StatementList({
     <div className={styles.container}>
       <Card title="Extrato">
         <div className={styles.cardBox}>
-          {content}
+          <div className={styles.transactionsList}>
+            {content}
+          </div>
+          {onPageChange && (
+            <div className={styles.paginationWrapper}>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={onPageChange}
+              />
+            </div>
+          )}
         </div>
-        {onPageChange && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={onPageChange}
-          />
-        )}
       </Card>
     </div>
   );

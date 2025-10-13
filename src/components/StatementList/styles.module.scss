@@ -3,15 +3,33 @@
 .container {
   display: flex;
   flex-direction: column;
-  min-height: 0;
-  flex: 2;
+  flex: 1;
+  height: 100%;
+
+  :global(.card) {
+    height: 100%;
+    justify-content: flex-start;
+  }
 }
 
 .cardBox {
-  overflow-y: scroll;
-  min-height: 0;
   display: flex;
   flex-direction: column;
-  padding-right: 0.5rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.transactionsList {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: $spacing-sm;
   scrollbar-width: thin;
+}
+
+.paginationWrapper {
+  flex-shrink: 0;
+  margin-top: $margin-sm;
+  padding-top: $padding-sm;
+  border-top: 1px solid $color-border-200;
 }

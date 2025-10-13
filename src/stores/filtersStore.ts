@@ -18,7 +18,7 @@ const initialFilters: FiltersState = {
   minAmount: AMOUNT_FILTER_LIMITS.min,
   maxAmount: AMOUNT_FILTER_LIMITS.max,
   currentPage: 1,
-  itemsPerPage: 10,
+  itemsPerPage: 5,
 };
 
 export const useFiltersStore = create<TransactionFiltersStore>((set) => ({
