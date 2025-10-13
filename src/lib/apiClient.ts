@@ -13,6 +13,20 @@ type RequestOptions = RequestInit & {
   skipJson?: boolean;
 };
 
+function getAuthToken(): string | null {
+  if (typeof window === 'undefined') return null;
+
+  try {
+    const authStorage = localStorage.getItem('auth-storage');
+    if (!authStorage) return null;
+
+    const parsed = JSON.parse(authStorage);
+    return parsed?.state?.token || null;
+  } catch {
+    return null;
+  }
+}
+
 export async function apiRequest<T>(
   path: string,
   options: RequestOptions = {},
@@ -26,6 +40,11 @@ export async function apiRequest<T>(
 
   if (shouldSetJsonHeader && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json');
+  }
+
+  const token = getAuthToken();
+  if (token && !headers.has('Authorization')) {
+    headers.set('Authorization', `Bearer ${token}`);
   }
 
   const response = await fetch(`${baseUrl}${path}`, {
