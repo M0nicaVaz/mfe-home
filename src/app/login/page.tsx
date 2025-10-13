@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
-import { Button, InputText, Card } from 'shared';
+import { InputText, Card } from 'shared';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 
@@ -49,9 +49,9 @@ export default function LoginPage() {
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <Button type="submit" disabled={isLoading}>
+          <button type="submit" disabled={isLoading} className={styles.submitButton}>
             {isLoading ? 'Entrando...' : 'Entrar'}
-          </Button>
+          </button>
 
           <p className={styles.link}>
             Não tem conta?{' '}
