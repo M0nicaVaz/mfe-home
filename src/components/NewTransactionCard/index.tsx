@@ -7,7 +7,8 @@ import type { TransactionType, Attachment } from "shared";
 import { formatCurrency, parseCurrencyInput, fileToBase64 } from "shared/utils";
 import { useTransactionValidators } from "@/hooks/useTransactionValidators";
 import { useState } from "react";
-import { uploadToS3 } from "../../utils/uploadFile"
+import { uploadToS3 } from "../../utils/uploadFile";
+import { useAuthStore } from "@/stores/authStore";
 
 interface NewTransactionCardProps {
   onAdd: (transaction: Transaction) => Promise<void>;
@@ -18,6 +19,7 @@ export default function NewTransactionCard({
   onAdd,
   isLoading = false,
 }: NewTransactionCardProps) {
+  const { user } = useAuthStore();
   const {
     type,
     amount,
@@ -62,7 +64,7 @@ export default function NewTransactionCard({
     const direction = Transaction.getDirectionFromType(type);
     const newTransaction = new Transaction(
       crypto.randomUUID(),
-      "123",
+      user?.id || "unknown",
       amount,
       new Date().toISOString(),
       direction,
