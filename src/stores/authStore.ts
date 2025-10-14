@@ -3,10 +3,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { loginUser, registerUser, verifyToken } from '@/api/authApi';
-import type { User, LoginInput, RegisterInput } from '@/types/auth';
+import type { UserDTO, LoginInput, RegisterInput } from '@/types/auth';
 
 type AuthStore = {
-  user: User | null;
+  user: UserDTO | null;
   token: string | null;
   isLoading: boolean;
   error: string | null;

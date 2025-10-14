@@ -6,6 +6,13 @@ export type User = {
   created_at: string;
 };
 
+export type UserDTO = {
+  id: string;
+  email: string;
+  name: string;
+  created_at: string;
+};
+
 export type RegisterInput = {
   email: string;
   password: string;
@@ -18,6 +25,6 @@ export type LoginInput = {
 };
 
 export type AuthResponse = {
-  user: User;
+  user: UserDTO;
   token: string;
 };

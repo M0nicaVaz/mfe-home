@@ -148,7 +148,13 @@ export async function mockCreateTransaction(input: TransactionCreateInput): Prom
   const transactions = getTransactions();
 
   const newTransaction: TransactionDTO = {
-    ...input,
+    id: input.id || crypto.randomUUID(),
+    clientId: input.clientId,
+    amount: input.amount,
+    date: input.date,
+    type: input.type,
+    direction: input.direction || 'outcome',
+    attachment: input.attachment,
     userId: currentUser.id,
   };
 
