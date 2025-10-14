@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import styles from "./styles.module.scss";
-import { InputSelect, Button, InputText, FileUploader } from "shared";
-import { createPortal } from "react-dom";
-import { useMounted } from "../../hooks";
-import { Transaction } from "@/models/Transaction";
-import type { TransactionType, Attachment } from "shared";
-import { useState, useEffect } from "react";
-import { formatCurrency, parseCurrencyInput, fileToBase64 } from "shared/utils";
-import { useTransactionValidators } from "@/hooks/useTransactionValidators";
+import styles from './styles.module.scss';
+import { InputSelect, Button, InputText, FileUploader } from 'shared';
+import { createPortal } from 'react-dom';
+import { useMounted } from '../../hooks';
+import { Transaction } from '@/models/Transaction';
+import type { TransactionType, Attachment } from 'shared';
+import { useState, useEffect } from 'react';
+import { formatCurrency, parseCurrencyInput } from 'shared/utils';
+import { useTransactionValidators } from '@/hooks/useTransactionValidators';
 
 type ModalProps = {
   initialData: Transaction;
@@ -82,7 +82,7 @@ export default function Modal({
   ) => {
     const { name, value } = e.target;
 
-    if (name === "type") {
+    if (name === 'type') {
       const newType = value as TransactionType;
       handleTypeChange(newType);
       setData(
@@ -97,7 +97,7 @@ export default function Modal({
             prev.attachment
           )
       );
-    } else if (name === "amount") {
+    } else if (name === 'amount') {
       const parsedAmount = parseCurrencyInput(value);
       handleAmountChange(parsedAmount);
       setData(
@@ -156,12 +156,12 @@ export default function Modal({
                 placeholder="Selecione o tipo de transação"
                 onChange={handleChange}
                 options={[
-                  { value: "depósito", label: "Depósito" },
-                  { value: "saque", label: "Saque" },
-                  { value: "investimento", label: "Investimento" },
-                  { value: "pagamento", label: "Pagamento" },
-                  { value: "transferência", label: "Transferência" },
-                  { value: "outro", label: "Outro" },
+                  { value: 'depósito', label: 'Depósito' },
+                  { value: 'saque', label: 'Saque' },
+                  { value: 'investimento', label: 'Investimento' },
+                  { value: 'pagamento', label: 'Pagamento' },
+                  { value: 'transferência', label: 'Transferência' },
+                  { value: 'outro', label: 'Outro' },
                 ]}
               />
               <InputText
@@ -172,7 +172,7 @@ export default function Modal({
                 isError={!!showInputError}
                 errorMessage={showInputError ? amountError : null}
               />
-              {amountError && amountError.includes("⚠️") && touched && (
+              {amountError && amountError.includes('⚠️') && touched && (
                 <div className={styles.warning}>{amountError}</div>
               )}
             </div>

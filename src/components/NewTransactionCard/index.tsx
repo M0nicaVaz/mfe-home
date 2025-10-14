@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { Card, InputSelect, InputText, Button, FileUploader } from "shared";
-import styles from "./styles.module.scss";
-import { Transaction } from "@/models/Transaction";
-import type { TransactionType, Attachment } from "shared";
-import { formatCurrency, parseCurrencyInput, fileToBase64 } from "shared/utils";
-import { useTransactionValidators } from "@/hooks/useTransactionValidators";
-import { useState } from "react";
-import { uploadToS3 } from "../../utils/uploadFile";
-import { useAuthStore } from "@/stores/authStore";
+import { Card, InputSelect, InputText, Button, FileUploader } from 'shared';
+import styles from './styles.module.scss';
+import { Transaction } from '@/models/Transaction';
+import type { TransactionType, Attachment } from 'shared';
+import { formatCurrency, parseCurrencyInput } from 'shared/utils';
+import { useTransactionValidators } from '@/hooks/useTransactionValidators';
+import { useState } from 'react';
+import { uploadToS3 } from '../../utils/uploadFile';
+import { useAuthStore } from '@/stores/authStore';
 
 interface NewTransactionCardProps {
   onAdd: (transaction: Transaction) => Promise<void>;
@@ -51,20 +51,20 @@ export default function NewTransactionCard({
       return;
     }
 
-    if(attachment?.file) {
+    if (attachment?.file) {
       try {
         const { url, key } = await uploadToS3(attachment.file as File);
         attachment.url = url;
         attachment.key = key;
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     }
 
     const direction = Transaction.getDirectionFromType(type);
     const newTransaction = new Transaction(
       crypto.randomUUID(),
-      user?.id || "unknown",
+      user?.id || 'unknown',
       amount,
       new Date().toISOString(),
       direction,
@@ -94,15 +94,15 @@ export default function NewTransactionCard({
               handleTypeChange(e.target.value as TransactionType)
             }
             options={[
-              { value: "depósito", label: "Depósito" },
-              { value: "saque", label: "Saque" },
-              { value: "investimento", label: "Investimento" },
-              { value: "pagamento", label: "Pagamento" },
-              { value: "transferência", label: "Transferência" },
-              { value: "outro", label: "Outro" },
+              { value: 'depósito', label: 'Depósito' },
+              { value: 'saque', label: 'Saque' },
+              { value: 'investimento', label: 'Investimento' },
+              { value: 'pagamento', label: 'Pagamento' },
+              { value: 'transferência', label: 'Transferência' },
+              { value: 'outro', label: 'Outro' },
             ]}
           />
-          <div style={{ height: "1.5rem" }}></div>
+          <div style={{ height: '1.5rem' }}></div>
           <InputText
             name="amount"
             value={formatCurrency(amount).toString()}
@@ -115,15 +115,15 @@ export default function NewTransactionCard({
             isError={!!showInputError}
             errorMessage={showInputError ? amountError : null}
           />
-          {amountError && amountError.includes("⚠️") && touched && (
+          {amountError && amountError.includes('⚠️') && touched && (
             <div className={styles.warning}>{amountError}</div>
           )}
-          <div style={{ height: "2em" }}></div>
-          <FileUploader 
+          <div style={{ height: '2em' }}></div>
+          <FileUploader
             file={attachment?.file}
-            onFileSelect={handleFileSelect} 
+            onFileSelect={handleFileSelect}
           />
-          <div style={{ height: "2em" }}></div>
+          <div style={{ height: '2em' }}></div>
           <Button
             label="Confirmar"
             size="large"
