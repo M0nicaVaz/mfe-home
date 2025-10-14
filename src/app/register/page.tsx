@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
 import { InputText, Card } from 'shared';
 import styles from './styles.module.scss';
-import Link from 'next/link';
+import Image from 'next/image';
+import dashboardImg from '@/assets/dashboard_img.png';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -28,6 +30,15 @@ export default function RegisterPage() {
 
   return (
     <div className={styles.container}>
+      <Image
+        src={dashboardImg}
+        alt="Visualização do dashboard da plataforma"
+        width={400}
+        height={400}
+        objectFit="contain"
+        priority
+      />
+
       <Card title="Criar Conta">
         <form onSubmit={handleSubmit} className={styles.form}>
           <InputText
@@ -62,13 +73,16 @@ export default function RegisterPage() {
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <button type="submit" disabled={isLoading} className={styles.submitButton}>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={styles.submitButton}
+          >
             {isLoading ? 'Criando conta...' : 'Criar Conta'}
           </button>
 
           <p className={styles.link}>
-            Já tem conta?{' '}
-            <Link href="/login">Fazer login</Link>
+            Já tem conta? <Link href="/login">Fazer login</Link>
           </p>
         </form>
       </Card>

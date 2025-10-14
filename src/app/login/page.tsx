@@ -6,6 +6,8 @@ import { useAuthStore } from '@/stores/authStore';
 import { InputText, Card } from 'shared';
 import styles from './styles.module.scss';
 import Link from 'next/link';
+import Image from 'next/image';
+import dashboardImg from '@/assets/dashboard_img.png';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -27,6 +29,14 @@ export default function LoginPage() {
 
   return (
     <div className={styles.container}>
+      <Image
+        src={dashboardImg}
+        alt="Visualização do dashboard da plataforma"
+        width={400}
+        height={400}
+        objectFit="contain"
+        priority
+      />
       <Card title="Login">
         <form onSubmit={handleSubmit} className={styles.form}>
           <InputText
@@ -51,13 +61,16 @@ export default function LoginPage() {
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <button type="submit" disabled={isLoading} className={styles.submitButton}>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={styles.submitButton}
+          >
             {isLoading ? 'Entrando...' : 'Entrar'}
           </button>
 
           <p className={styles.link}>
-            Não tem conta?{' '}
-            <Link href="/register">Registrar</Link>
+            Não tem conta? <Link href="/register">Registrar</Link>
           </p>
         </form>
       </Card>

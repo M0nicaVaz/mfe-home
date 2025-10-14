@@ -1,21 +1,3 @@
-export type TransactionDirection = "income" | "outcome";
-export type TransactionType =
-  | "depósito"
-  | "saque"
-  | "investimento"
-  | "pagamento"
-  | "transferência"
-  | "outro";
-
-export type Attachment = {
-  name: string;
-  type: string;
-  size: number;
-  base64?: string; // usado para armazenar o conteúdo localmente (trocar quando tiver o S3)
-  url?: string;
-  key?: string;
-  file?: File | Blob;
-};
 import type {
   TransactionDirection,
   TransactionType,
@@ -51,12 +33,12 @@ export class Transaction {
   }
 
   static typeToDirectionMap: Record<TransactionType, TransactionDirection> = {
-    depósito: "income",
-    saque: "outcome",
-    investimento: "income",
-    pagamento: "outcome",
-    transferência: "outcome",
-    outro: "outcome",
+    depósito: 'income',
+    saque: 'outcome',
+    investimento: 'income',
+    pagamento: 'outcome',
+    transferência: 'outcome',
+    outro: 'outcome',
   };
 
   static fromDTO(dto: TransactionDTO): Transaction {
@@ -72,15 +54,15 @@ export class Transaction {
   }
 
   formattedAmount(): string {
-    const sign = this.direction === "income" ? "+" : "-";
-    return `${sign} R$${this.amount.toFixed(2).replace(".", ",")}`;
+    const sign = this.direction === 'income' ? '+' : '-';
+    return `${sign} R$${this.amount.toFixed(2).replace('.', ',')}`;
   }
 
   formattedDate(): string {
-    return new Date(this.date).toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
+    return new Date(this.date).toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
     });
   }
 

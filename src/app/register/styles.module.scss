@@ -4,6 +4,16 @@
   align-items: center;
   min-height: 100vh;
   padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  max-width: 420px;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(94, 67, 184, 0.15);
 }
 
 .form {
